@@ -8,13 +8,13 @@ RUN         apk add --update git build-base; \
             go get -u -v -d github.com/muesli/beehive; \
 	          mkdir -p /go/bin; \
 	          cd $GOPATH/src/github.com/muesli/beehive; \
-	          go build -ldflags="-s -w" -v -o /go/bin/beehive
+	          go build -ldflags="-s -w" -v -o beehive
 
 FROM        alpine:3.6
 RUN         apk --no-cache add ca-certificates; \
 	          mkdir -p /beehive
 WORKDIR     /beehive
-COPY        --from=builder /go/bin/beehive .
+COPY        --from=builder /go/src/github.com/muesli/beehive/ .
 
 VOLUME      /conf
 EXPOSE      8181
